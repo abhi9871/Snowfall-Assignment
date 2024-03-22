@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snowfall</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Hide overflow to prevent scrollbars */
+    }
+    #snowfall {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: green; /* Green background */
+    }
+    .snowflake {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+    }
+</style>
+</head>
+<body>
+<div id="snowfall"></div>
+
+<script>
+// Function to create snowflake
+function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.style.width = Math.random() * 5 + 'px';
+    snowflake.style.height = snowflake.style.width;
+    snowflake.style.top = '-10px';
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    document.getElementById('snowfall').appendChild(snowflake);
+
+    // Animation to make snowflake fall
+    const animation = snowflake.animate([
+        { transform: 'translateY(-100px)' },
+        { transform: `translateY(${window.innerHeight + 10}px)` }
+    ], {
+        duration: Math.random() * 5000 + 3000, // Duration between 3 to 8 seconds
+        iterations: Infinity,
+        easing: 'linear'
+    });
+
+    // Remove snowflake from DOM after it's out of view
+    animation.onfinish = () => {
+        snowflake.remove();
+    };
+    
+}
+
+// Create snowflakes periodically
+setInterval(createSnowflake, 500);
+</script>
+</body>
+</html>
